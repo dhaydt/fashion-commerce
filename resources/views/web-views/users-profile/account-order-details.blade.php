@@ -5,25 +5,24 @@
 @push('css_or_js')
     <style>
         .page-item.active .page-link {
-            background-color: {{$web_config['primary_color']}}            !important;
+            background-color: {{$web_config['primary_color']}}!important;
         }
-
         .page-item.active > .page-link {
             box-shadow: 0 0 black !important;
         }
-
         .widget-categories .accordion-heading > a:hover {
             color: #FFD5A4 !important;
         }
-
         .widget-categories .accordion-heading > a {
             color: #FFD5A4;
         }
-
         body {
             font-family: 'Titillium Web', sans-serif
         }
-
+        .modal-dialog .review-content {
+            background-color: white;
+            padding: 20px
+        }
         .card {
             border: none
         }
@@ -343,7 +342,7 @@
                                         </div>
                                     </div>
                                     <td>
-                                        {{-- @if($order->order_status=='delivered')
+                                        @if($order->order_status=='delivered')
                                             <a href="javascript:" class="btn btn-primary btn-sm" data-toggle="modal"
                                                data-target="#review-{{$detail->id}}">{{\App\CPU\translate('review')}}</a>
                                         @else
@@ -351,7 +350,7 @@
                                                 <a href="javascript:" onclick="review_message()"
                                                    class="btn btn-primary btn-sm">{{\App\CPU\translate('review')}}</a>
                                             </label>
-                                        @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -498,7 +497,7 @@
                  id="review-{{$detail->id}}" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content review-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">
                                 {{$product['name']}}

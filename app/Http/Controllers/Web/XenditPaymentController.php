@@ -157,6 +157,7 @@ class XenditPaymentController extends Controller
             'failure_redirect_url' => env('APP_URL').'/xendit-payment/expired/'.$order_id,
         ];
 
+        // dd($params);
         $checkout_session = \Xendit\Invoice::create($params);
 
         return redirect()->away($checkout_session['invoice_url']);
