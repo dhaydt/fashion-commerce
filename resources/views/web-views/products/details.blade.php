@@ -47,32 +47,25 @@
         .msg-option {
             display: none;
         }
-
         .chatInputBox {
             width: 100%;
         }
-
         .go-to-chatbox {
             width: 100%;
             text-align: center;
             padding: 5px 0px;
             display: none;
         }
-
         .feature_header {
             display: flex;
             justify-content: center;
         }
-
         .btn-number:hover {
             color: {{$web_config['secondary_color']}};
-
         }
-
         .for-total-price {
             margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: -30%;
         }
-
         .feature_header span {
             padding- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 15px;
             font-weight: 700;
@@ -80,28 +73,29 @@
             background-color: #ffffff;
             text-transform: uppercase;
         }
+        .tab-spec{
+            height: 408px;
+        }
+        .similiar-row {
+                height: 344px;
+        }
 
         @media (max-width: 768px) {
             .feature_header span {
                 margin-bottom: -40px;
             }
-
             .for-total-price {
                 padding- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 30%;
             }
-
             .product-quantity {
                 padding- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 4%;
             }
-
             .for-margin-bnt-mobile {
                 margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 7px;
             }
-
             .font-for-tab {
                 font-size: 11px !important;
             }
-
             .pro {
                 font-size: 13px;
             }
@@ -111,20 +105,16 @@
             .for-margin-bnt-mobile {
                 margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 3px;
             }
-
             .for-discount {
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 10% !important;
             }
-
-            .for-dicount-div {
-                margin-top: -5%;
+            .for-dicount-div.discount-hed {
+                margin-top: 0 !important;
                 margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: -7%;
             }
-
             .product-quantity {
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 4%;
             }
-
         }
 
         @media (max-width: 500px) {
@@ -132,36 +122,34 @@
                 margin-top: -4%;
                 margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: -5%;
             }
-
             .for-total-price {
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: -20%;
             }
-
             .view-btn-div {
-
                 margin-top: -9%;
                 float: {{Session::get('direction') === "rtl" ? 'left' : 'right'}};
             }
-
             .for-discount {
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 7%;
             }
-
             .viw-btn-a {
                 font-size: 10px;
                 font-weight: 600;
             }
-
             .feature_header span {
                 margin-bottom: -7px;
             }
-
             .for-mobile-capacity {
                 margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 7%;
             }
-
             .product_overview .nav-tabs {
                 border: none;
+            }
+        }
+        @media(min-width: 400px){
+            .simil-row{
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
             }
         }
 
@@ -179,9 +167,21 @@
                 padding: 0 0 10px 0;
                 right: 0;
                 background-color: #fff;
-                z-index: 1;
+                z-index: 3;
+            }
+            .product_overview .nav-tabs .nav-item .nav-link{
+                font-size: 18px;
+            }
+            .similiar-row{
+                height: 268px;
+            }
+            .card-header {
+                max-height: 130px;
+                min-height: 130px;
+                margin-bottom: 5px;
             }
         }
+
         thead {
             color: white;
             background: {{$web_config['primary_color']}}!important;
@@ -190,7 +190,6 @@
             border-bottom: 1px solid #ddd;
             padding: 5px;
         }
-
     </style>
 @endpush
 
@@ -452,11 +451,17 @@
                                 {{\App\CPU\translate('OVERVIEW')}}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reviews" data-toggle="tab" role="tab"
+                               style="color: black !important;">
+                                {{\App\CPU\translate('REVIEWS')}}
+                            </a>
+                        </li>
                     </ul>
                     <div class="px-4 pt-lg-3 pb-3 mb-3">
                         <div class="tab-content px-lg-3">
                             <!-- Tech specs tab-->
-                            <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                            <div class="tab-pane tab-spec fade show active" id="overview" role="tabpanel">
                                 <div class="row pt-2 specification">
                                     @if($product->video_url!=null)
                                         <div class="col-12 mb-4">
@@ -475,7 +480,218 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Reviews tab-->
+                             <!-- Reviews tab-->
+                             <div class="tab-pane fade" id="reviews" role="tabpanel">
+                                <div class="row pt-2 pb-3">
+                                    <div class="col-lg-4 col-md-5 ">
+                                        <h2 class="overall_review mb-2">{{$overallRating[1]}}
+                                            &nbsp{{\App\CPU\translate('Reviews')}} </h2>
+                                        <div
+                                            class="star-rating {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">
+                                            @if (round($overallRating[0])==5)
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <i class="czi-star-filled font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                            @endif
+                                            @if (round($overallRating[0])==4)
+                                                @for ($i = 0; $i < 4; $i++)
+                                                    <i class="czi-star-filled font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                                <i class="czi-star font-size-sm text-muted {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                            @endif
+                                            @if (round($overallRating[0])==3)
+                                                @for ($i = 0; $i < 3; $i++)
+                                                    <i class="czi-star-filled font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                                @for ($j = 0; $j < 2; $j++)
+                                                    <i class="czi-star font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                            @endif
+                                            @if (round($overallRating[0])==2)
+                                                @for ($i = 0; $i < 2; $i++)
+                                                    <i class="czi-star-filled font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                                @for ($j = 0; $j < 3; $j++)
+                                                    <i class="czi-star font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                            @endif
+                                            @if (round($overallRating[0])==1)
+                                                @for ($i = 0; $i < 4; $i++)
+                                                    <i class="czi-star font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                                <i class="czi-star-filled font-size-sm text-accent {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                            @endif
+                                            @if (round($overallRating[0])==0)
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <i class="czi-star font-size-sm text-muted {{Session::get('direction') === "rtl" ? 'ml-1' : 'mr-1'}}"></i>
+                                                @endfor
+                                            @endif
+                                        </div>
+                                        <span class="d-inline-block align-middle">
+                                    {{$overallRating[0]}} {{\App\CPU\translate('Overall')}} {{\App\CPU\translate('rating')}}
+                                </span>
+                                    </div>
+                                    <div class="col-lg-8 col-md-7 pt-sm-3 pt-md-0">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div
+                                                class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                    class="d-inline-block align-middle text-muted">{{\App\CPU\translate('5')}}</span><i
+                                                    class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                         style="width: <?php echo $widthRating = ($rating[0] != 0) ? ($rating[0] / $overallRating[1]) * 100 : (0); ?>%;"
+                                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                        {{$rating[0]}}
+                                    </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div
+                                                class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                    class="d-inline-block align-middle text-muted">{{\App\CPU\translate('4')}}</span><i
+                                                    class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                         style="width: <?php echo $widthRating = ($rating[1] != 0) ? ($rating[1] / $overallRating[1]) * 100 : (0); ?>%; background-color: #a7e453;"
+                                                         aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                       {{$rating[1]}}
+                                    </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div
+                                                class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                    class="d-inline-block align-middle text-muted">{{\App\CPU\translate('3')}}</span><i
+                                                    class="czi-star-filled font-size-xs ml-1"></i></div>
+                                            <div class="w-100">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                         style="width: <?php echo $widthRating = ($rating[2] != 0) ? ($rating[2] / $overallRating[1]) * 100 : (0); ?>%; background-color: #ffda75;"
+                                                         aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                        {{$rating[2]}}
+                                    </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-2">
+                                            <div
+                                                class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                    class="d-inline-block align-middle text-muted">{{\App\CPU\translate('2')}}</span><i
+                                                    class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                         style="width: <?php echo $widthRating = ($rating[3] != 0) ? ($rating[3] / $overallRating[1]) * 100 : (0); ?>%; background-color: #fea569;"
+                                                         aria-valuenow="9" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                    {{$rating[3]}}
+                                    </span>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="text-nowrap {{Session::get('direction') === "rtl" ? 'ml-3' : 'mr-3'}}"><span
+                                                    class="d-inline-block align-middle text-muted">{{\App\CPU\translate('1')}}</span><i
+                                                    class="czi-star-filled font-size-xs {{Session::get('direction') === "rtl" ? 'mr-1' : 'ml-1'}}"></i>
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="progress" style="height: 4px;">
+                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                         style="width: <?php echo $widthRating = ($rating[4] != 0) ? ($rating[4] / $overallRating[1]) * 100 : (0); ?>%;"
+                                                         aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <span
+                                                class="text-muted {{Session::get('direction') === "rtl" ? 'mr-3' : 'ml-3'}}">
+                                       {{$rating[4]}}
+                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-4 pb-4 mb-3">
+                                <div class="row pb-4">
+                                    <div class="col-12">
+                                        @foreach($product->reviews as $productReview)
+                                            <div class="single_product_review p-2" style="margin-bottom: 20px">
+                                                <div class="product-review d-flex justify-content-between">
+                                                    <div
+                                                        class="d-flex mb-3 {{Session::get('direction') === "rtl" ? 'pl-5' : 'pr-5'}}">
+                                                        <div
+                                                            class="media media-ie-fix align-items-center {{Session::get('direction') === "rtl" ? 'ml-4 pl-2' : 'mr-4 pr-2'}}">
+                                                            <img style="max-height: 64px;"
+                                                                 class="rounded-circle" width="64"
+                                                                 onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                                                 src="{{asset("storage/app/public/profile")}}/{{(isset($productReview->user)?$productReview->user->image:'')}}"
+                                                                 alt="{{isset($productReview->user)?$productReview->user->f_name:'not exist'}}"/>
+                                                            <div
+                                                                class="media-body {{Session::get('direction') === "rtl" ? 'pr-3' : 'pl-3'}}">
+                                                                <h6 class="font-size-sm mb-0">{{isset($productReview->user)?$productReview->user->f_name:'not exist'}}</h6>
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div
+                                                                        class="product_review_rating">{{$productReview->rating}}</div>
+                                                                    <div class="star-rating">
+                                                                        @for($inc=0;$inc<5;$inc++)
+                                                                            @if($inc<$productReview->rating)
+                                                                                <i class="sr-star czi-star-filled active"></i>
+                                                                            @else
+                                                                                <i class="sr-star czi-star"></i>
+                                                                            @endif
+                                                                        @endfor
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="font-size-ms text-muted">
+                                                                    {{$productReview->created_at->format('M d Y')}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-size-md mt-3 mb-2">{{$productReview->comment}}</p>
+                                                        @if (!empty(json_decode($productReview->attachment)))
+                                                            @foreach (json_decode($productReview->attachment) as $key => $photo)
+                                                                <img
+                                                                    style="cursor: pointer;border-radius: 5px;border:1px;border-color: #7a6969; height: 67px ; margin-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 5px;"
+                                                                    onclick="showInstaImage('{{asset("storage/app/public/review/$photo")}}')"
+                                                                    class="cz-image-zoom"
+                                                                    onerror="this.src='{{asset('public/assets/front-end/img/image-place-holder.png')}}'"
+                                                                    src="{{asset("storage/app/public/review/$photo")}}"
+                                                                    alt="Product review" width="67">
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @if(count($product->reviews)==0)
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="text-danger text-center">{{\App\CPU\translate('product_review_not_available')}}</h6>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -850,7 +1066,7 @@
 
 
     <!-- Product carousel (You may also like)-->
-    {{-- <div class="container  mb-3 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
+    <div class="container mt-4  mb-3 rtl" style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}};">
         <div class="flex-between">
             <div class="feature_header">
                 <span>{{ \App\CPU\translate('similar_products')}}</span>
@@ -869,10 +1085,10 @@
         <!-- Grid-->
         <hr class="view_border">
         <!-- Product-->
-        <div class="row mt-4">
+        <div class="row mt-4 simil-row">
             @if (count($relatedProducts)>0)
                 @foreach($relatedProducts as $key => $relatedProduct)
-                    <div class="col-xl-2 col-sm-3 col-6" style="margin-bottom: 20px">
+                    <div class="col-xl-2 col-sm-3 col-6 similiar-row" style="margin-bottom: 20px">
                         @include('web-views.partials._single-product',['product'=>$relatedProduct])
                     </div>
                 @endforeach
@@ -902,7 +1118,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 
 @push('script')
