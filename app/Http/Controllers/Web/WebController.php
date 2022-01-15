@@ -207,14 +207,14 @@ class WebController extends Controller
 
     public function checkout_details(Request $request)
     {
-        // if (auth('customer')->user()->district == null) {
-        //     // dd('no distrcit');
-        //     $country = DB::table('country')->get();
+        if (auth('customer')->user()->district == null) {
+            // dd('no distrcit');
+            $country = DB::table('country')->get();
 
-        //     Toastr::warning(translate('Please fill your address first'));
+            Toastr::warning(translate('Please fill your address first'));
 
-        //     return view('web-views.addAddress', compact('country'));
-        // }
+            return view('web-views.addAddress', compact('country'));
+        }
         $cart_group_ids = CartManager::get_cart_group_ids();
         if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
             $ship = \App\CPU\Helpers::get_shipping_methods('admin')->first();

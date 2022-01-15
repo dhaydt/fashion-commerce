@@ -3,13 +3,11 @@
         font-weight: 400 !important;
         font-size: 16px;
     }
-
     .cart_total_value {
-        color: {{$web_config['primary_color']}}     !important;
+        color: {{$web_config['primary_color']}} !important;
         font-weight: 700 !important;
         font-size: 25px !important;
     }
-
     .cart_value {
         font-weight: 600 !important;
         font-size: 16px;
@@ -48,14 +46,14 @@
                 {{\App\CPU\Helpers::currency_converter($total_tax)}}
             </span>
         </div>
-        @if (!Request::is('shop-cart'))
+        {{-- @if (!Request::is('shop-cart')) --}}
         <div class="d-flex justify-content-between">
             <span class="cart_title">{{\App\CPU\translate('shipping')}}</span>
             <span class="cart_value">
                 {{\App\CPU\Helpers::currency_converter($total_shipping_cost)}}
             </span>
         </div>
-        @endif
+        {{-- @endif --}}
         <div class="d-flex justify-content-between">
             <span class="cart_title">{{\App\CPU\translate('discount_on_product')}}</span>
             <span class="cart_value">
