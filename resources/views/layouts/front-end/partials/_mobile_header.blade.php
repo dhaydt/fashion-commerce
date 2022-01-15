@@ -47,7 +47,7 @@
         }
         .mobile-head {
             position: fixed;
-            width: 100vw;
+            width: 100%;
             z-index: 11;
         }
 
