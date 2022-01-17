@@ -113,16 +113,18 @@
            @php($shippings=\App\CPU\Helpers::get_shipping_methods($cartItem['seller_id'],$cartItem['seller_is'],$cartItem['product_id']))
            <div class="row">
                {{-- {{ dd($shippings) }} --}}
-               {{-- {{ dd($choosen_shipping['']) }} --}}
+               {{-- {{ dd($choosen_shipping) }} --}}
                <div class="col-12">
                    <select class="form-control"
                        onchange="set_shipping_id(this.value,'{{$cartItem['cart_group_id']}}')">
-                       <option selected>{{\App\CPU\translate('choose_shipping_method')}}</option>
+                       <option>{{\App\CPU\translate('choose_shipping_method')}}</option>
                        @if ($shippings[0][0][0]['costs'])
                        @foreach($shippings[0][0][0]['costs'] as $ship)
                        {{-- {{ dd($ship) }} --}}
                        <option value="{{'JNE-'.$ship['service'].','.$ship['cost'][0]['value']}}"
-                           {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                       @if (isset($choosen_shipping['shipping_method_id']))
+                       {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                       @endif
                            {{"JNE - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
                        </option>
@@ -132,8 +134,9 @@
                        @if ($shippings[0][1][0]['costs'])
                        @foreach($shippings[0][1][0]['costs'] as $ship)
                        {{-- {{ dd($ship) }} --}}
-                      <option value="{{'TIKI- '.$ship['service'].','.$ship['cost'][0]['value']}}"
-                           {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                      <option value="{{'TIKI- '.$ship['service'].','.$ship['cost'][0]['value']}}" @if (isset($choosen_shipping['shipping_method_id']))
+                            {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                        @endif
                            {{"TIKI - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
                        </option>
@@ -144,7 +147,9 @@
                        @foreach($shippings[0][2][0]['costs'] as $ship)
                        {{-- {{ dd($ship) }} --}}
                        <option value="{{'SiCepat- '.$ship['service'].','.$ship['cost'][0]['value']}}"
-                           {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                        @if (isset($choosen_shipping['shipping_method_id']))
+                            {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                        @endif
                            {{"SiCepat - ".''.$ship['service'].' ( '.$ship['cost'][0]['etd'].' Days)
                           '.\App\CPU\Helpers::currency_converter(\App\CPU\Convert::idrTousd($ship['cost'][0]['value']))}}
                        </option>
@@ -152,7 +157,9 @@
                        @endif
                        @foreach($shippings[1] as $shipping)
                        <option value="{{$shipping['id']}}"
-                           {{$choosen_shipping['shipping_method_id']==$shipping['id']?'selected':''}}>
+                       @if (isset($choosen_shipping['shipping_method_id']))
+                        {{$choosen_shipping['shipping_method_id']==$ship['service']?'selected':''}}>
+                       @endif
                            {{$shipping['title'].' ( '.$shipping['duration'].' )
                            '.\App\CPU\Helpers::currency_converter($shipping['cost'])}}
                        </option>
