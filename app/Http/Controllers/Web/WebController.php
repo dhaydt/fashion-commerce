@@ -205,6 +205,54 @@ class WebController extends Controller
         ]);
     }
 
+    // public function checkout_details(Request $request)
+    // {
+    //     if (auth('customer')->user()->district == null) {
+    //         // dd('no distrcit');
+    //         $country = DB::table('country')->get();
+
+    //         Toastr::warning(translate('Please fill your address first'));
+
+    //         return view('web-views.addAddress', compact('country'));
+    //     }
+    //     $cart_group_ids = CartManager::get_cart_group_ids();
+    //     if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
+    //         $ship = \App\CPU\Helpers::get_shipping_methods('admin')->first();
+    //         // dd($ship);
+    //         if (isset($ship) == false) {
+    //             Toastr::info(translate('no_shipping_method_activated_by_admin'));
+    //             Toastr::info(translate('Please_contact_Grosa_provider!!'));
+
+    //             return redirect('shop-cart');
+    //         }
+    //         $shipping = CartShipping::where(['cart_group_id' => $cart_group_ids[0]])->first();
+    //         if (isset($shipping) == false) {
+    //             $shipping = new CartShipping();
+    //         }
+    //         $shipping['cart_group_id'] = $cart_group_ids[0];
+    //         $shipping['shipping_method_id'] = $ship['id'];
+    //         // $shipping['shipping_service'] = 'JNE-REG';
+    //         $shipping['shipping_cost'] = $ship['cost'];
+    //         $shipping->save();
+    //         // Toastr::info(translate('select_shipping_method_first'));
+
+    //         // return redirect('shop-cart');
+    //     }
+
+    //     if (count($cart_group_ids) > 0) {
+    //         $data = [
+    //             'name' => 'Alamat Pengiriman',
+    //         ];
+    //         session()->put('category', $data);
+
+    //         return view('web-views.checkout-shipping');
+    //     }
+
+    //     Toastr::info(translate('no_items_in_basket'));
+
+    //     return redirect('/');
+    // }
+
     public function checkout_details(Request $request)
     {
         if (auth('customer')->user()->district == null) {
@@ -215,36 +263,16 @@ class WebController extends Controller
 
             return view('web-views.addAddress', compact('country'));
         }
+
         $cart_group_ids = CartManager::get_cart_group_ids();
         if (CartShipping::whereIn('cart_group_id', $cart_group_ids)->count() != count($cart_group_ids)) {
-            $ship = \App\CPU\Helpers::get_shipping_methods('admin')->first();
-            // dd($ship);
-            if (isset($ship) == false) {
-                Toastr::info(translate('no_shipping_method_activated_by_admin'));
-                Toastr::info(translate('Please_contact_Grosa_provider!!'));
+            Toastr::info(translate('select_shipping_method_first'));
 
-                return redirect('shop-cart');
-            }
-            $shipping = CartShipping::where(['cart_group_id' => $cart_group_ids[0]])->first();
-            if (isset($shipping) == false) {
-                $shipping = new CartShipping();
-            }
-            $shipping['cart_group_id'] = $cart_group_ids[0];
-            $shipping['shipping_method_id'] = $ship['id'];
-            // $shipping['shipping_service'] = 'JNE-REG';
-            $shipping['shipping_cost'] = $ship['cost'];
-            $shipping->save();
-            // Toastr::info(translate('select_shipping_method_first'));
-
-            // return redirect('shop-cart');
+            return redirect('shop-cart');
         }
 
         if (count($cart_group_ids) > 0) {
-            $data = [
-                'name' => 'Alamat Pengiriman',
-            ];
-            session()->put('category', $data);
-
+            // session(['address_changed' => 0]);
             return view('web-views.checkout-shipping');
         }
 
