@@ -91,11 +91,23 @@
         .mobile-cart-col{
             padding-left: 0;
         }
-
         #loc-mobile {
             padding: 0.25rem 1.5rem 0.25rem 1.5rem !important;
         }
     }
+        @media(max-width:375px){
+            .search_form{
+                height: 36px;
+                width: 291.66px;
+                background-color: transparent;
+            }
+            .search_button {
+                width: 42px;
+                height: 36px;
+                display: flex;
+                justify-content: center;
+            }
+        }
 </style>
 @php($cat = session()->get('category'))
 @if (isset($cat))
